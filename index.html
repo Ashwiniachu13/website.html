@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-image: url("https://wallpapercave.com/wp/wp8514049.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        
+      }
+      .container button{
+        font-size: larger;
+        margin-bottom: 3%;
+        margin-top: 0px;
+      }
+      button {
+        padding: 10px;
+        margin-bottom: 2%;
+        border-radius: 10px;
+        width: 150px;
+        color: black;
+        background-color:white;
+      }
+      .container {
+        position: relative;
+        top: 100px;
+        left: 36%;
+        padding: 2%;
+        border: 5px solid black;
+        width: 350px;
+        height:400px;
+    
+        box-shadow: 0px 0px 4px 4px white;
+        border-radius: 40px;
+      }
+      .lbel {
+        margin-bottom: 5%;
+      }
+      #submit{
+        color:black;
+        background-color:white;
+        padding: 1% 3%;
+        margin-right: 1%;
+        border-radius: 5px;
+        width: 48%;
+      }
+      #log{
+        background-color:white;
+        color: black;
+        padding: 1% 3%;
+        width: 48%;
+        margin-left: 1%;
+        border-radius: 5px;
+      }
+      input{
+        width: 100%;
+        font-size:large;
+      }
+      label{
+        font-size: larger;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+        <center><button>Registration</button></center>
+      <form action="">
+        <label for="username" id="userlbel">Username : </label><br><br>
+        <input type="text"  placeholder="Usename..." class="lbel" id="input" /><br />
+        <label for="Password" id="plabel">Password : </label><br><br>
+        <input type="password" placeholder="Password..." class="lbel" /><br />
+        <label for="Cpass">Confirm Password : </label><br><br>
+        <input type="password" placeholder="Confirm Password..." class="lbel" /><br /><br>
+        <input type="Submit"  value="Register" id="submit" />
+        <input type="button" value="Login" id="log" />
+      </form>
+    </div>
+    <script>
+      let divget = document.getElementsByTagName("div");
+      let divcon = divget[1];
+      
+      //console.log(divcon)
+      let form = document.forms;
+      console.log(form[0]);
+      form[0].addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(e);
+        //let ulabel=document.getElementById("userlbel")
+        let username = e.target[0].value;
+        if (username[0] !== username[0].toUpperCase() && username.length < 10) {
+          alert("Write in correct format");
+          return;
+        }
+        console.log(username);
+
+        let password = e.target[1].value;
+        let passtype= /[A_Z]/.test(password)&&/[a-z]/.test(password)&&/\d/.test(password);
+        if ( passtype && password.length < 8) {
+          alert("Password is not in correct format");
+          return;
+        }
+        console.log(password);
+
+        let confirmpassword = e.target[2].value;
+        if (password !== confirmpassword) {
+          alert("password and confirmpassword are not same");
+          return;
+        }
+        console.log(confirmpassword);
+
+        let user = {username, password };
+        let reg = JSON.parse(localStorage.getItem("get")) || [];
+        
+        console.log(reg)
+        let duplicate=reg.find((val)=>val.username===username);
+        console.log(duplicate)
+        if(duplicate){
+          alert("user already exist");
+        }else{
+          reg.push(user);
+          localStorage.setItem("get", JSON.stringify(reg));
+          alert("User registered successfully!..")
+          form.reset();
+        }
+      });
+      let Login=document.getElementById("log");
+      Login.addEventListener("click",()=>{
+        window.location.assign("./login.html")
+      })
+    </script>
+  </body>
+</html>
